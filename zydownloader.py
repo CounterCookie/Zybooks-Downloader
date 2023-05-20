@@ -21,11 +21,12 @@ def getChapters():
 
 for chapter in getChapters():
     chapterNum = chapter['number']
-#    os.mkdir(str(chapterNum))
+    os.mkdir(f"{chapterNum}")
     for section in chapter['sections']:
         sectionNum = section['number']
 
-#        page = open(f"str(sectionNum)", 'w')
+        page = open(f"{chapterNum}/{sectionNum}", 'w')
 
         pageUrl = f"https://zyserver.zybooks.com/v1/zybook/{book}/chapter/{chapterNum}/section/{sectionNum}?auth_token={authToken}"
-        print(session.get(pageUrl).text)
+        data = json.loads(session.get(pageUrl).text)
+        page.write(json.dumps(data))
